@@ -62,7 +62,7 @@ public class GetSensorDataLambda implements RequestHandler<RequestClass, Respons
             }
             readRequests.setKeys(collection);
             requestItems.put(tableName, readRequests);
-            request.setRequestItems(requestItems);
+
             JSONObject sensorValues = new JSONObject();
             
             List<Map<String,AttributeValue>> list = client.batchGetItem(request).getResponses().get(tableName);

@@ -51,7 +51,7 @@ public class PutSensorDataLambda implements RequestHandler<RequestClass, Respons
             putRequest.addItemEntry("Timestamp", new AttributeValue(input.getTimestamp()));
             putRequest.addItemEntry("SensorID", new AttributeValue(key));
             AttributeValue value = new AttributeValue();
-            value.setN(Integer.toString(sensorValues.getInt(key)));
+            value.setN(sensorValues.getString(key));
             putRequest.addItemEntry("SensorValue", value);
             writeRequest.setPutRequest(putRequest);
             writeRequests.add(writeRequest);

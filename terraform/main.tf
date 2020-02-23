@@ -12,6 +12,35 @@ variable "sensor_data_name_prefix" {
   default = "SensorData"
 }
 
+resource "aws_s3_bucket" "image_bucket" {
+  bucket = "limr-image-${var.aws_region}"
+  acl    = "private"
+  lifecycle_rule {
+    id      = "expire"
+    enabled = true
+
+    expiration {
+      days = 7
+    }
+  }
+}
+
+resource "aws_sqs_queue" "image_queue" {
+  name                        = "ImageQueue"
+}
+
+resource "aws_dynamodb_table" "images" {
+  name = "ImageDatabase0"
+  billing_mode   = "PROVISIONED"
+  read_capacity  = 20
+  write_capacity = 20
+  hash_key       = "Timestamp"
+
+  attribute {
+    name = "Timestamp"
+    type = "S"
+  }
+}
 resource "aws_dynamodb_table" "sensorData" {
   name = "${var.sensor_data_name_prefix}0"
   billing_mode   = "PROVISIONED"
@@ -39,6 +68,47 @@ resource "aws_iam_policy" "dynamodb_access" {
         "dynamodb:*"
       ],
       "Resource": "arn:aws:dynamodb:*:*:*",
+      "Effect": "Allow"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_policy" "s3_access" {
+  name = "s3_access"
+  path = "/"
+  description = "IAM policy for accessing s3"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "s3:*"
+      ],
+      "Resource": "*",
+      "Effect": "Allow"
+    }
+  ]
+}
+EOF
+}
+resource "aws_iam_policy" "sqs_access" {
+  name = "sqs_access"
+  path = "/"
+  description = "IAM policy for accessing sqs"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "sqs:*"
+      ],
+      "Resource": "*",
       "Effect": "Allow"
     }
   ]

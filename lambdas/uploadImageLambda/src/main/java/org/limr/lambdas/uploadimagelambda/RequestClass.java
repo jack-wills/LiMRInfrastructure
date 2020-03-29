@@ -2,8 +2,7 @@ package org.limr.lambdas.uploadimagelambda;
 
 public class RequestClass {
     private String timestamp;
-    private String imageX;
-    private String imageY;
+    private String imageX, imageY, imageZ, rotation;
 
 	public String getTimestamp() {
 		return this.timestamp;
@@ -27,5 +26,21 @@ public class RequestClass {
 
 	public void setImageY(String imageY) {
 		this.imageY = imageY;
+	}
+
+	public String getImageZ() {
+		return this.imageZ;
+	}
+
+	public void setImageZ(String imageZ) {
+		this.imageZ = imageZ;
+	}
+
+	public String getRotation() {
+		return this.rotation;
+	}
+
+	public void setRotation(String rotation) {
+		this.rotation = rotation;
 	}
 }

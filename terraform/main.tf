@@ -54,6 +54,19 @@ resource "aws_dynamodb_table" "sensorData" {
   }
 }
 
+resource "aws_dynamodb_table" "audio" {
+  name = "AudioDatabase0"
+  billing_mode   = "PROVISIONED"
+  read_capacity  = 20
+  write_capacity = 20
+  hash_key       = "LinkID"
+
+  attribute {
+    name = "LinkID"
+    type = "S"
+  }
+}
+
 resource "aws_iam_policy" "dynamodb_access" {
   name = "dynamodb_access"
   path = "/"

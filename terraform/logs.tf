@@ -14,6 +14,10 @@ resource "aws_cloudwatch_log_group" "file_upload_lambda" {
   name              = "/aws/lambda/FileUploadLambda"
   retention_in_days = 14
 }
+resource "aws_cloudwatch_log_group" "audio_lambda" {
+  name              = "/aws/lambda/AudioLambda"
+  retention_in_days = 14
+}
 
 
 # See also the following AWS managed policy: AWSLambdaBasicExecutionRole
@@ -55,5 +59,9 @@ resource "aws_iam_role_policy_attachment" "upload_image_lambda_logs" {
 }
 resource "aws_iam_role_policy_attachment" "file_upload_lambda_logs" {
   role = "${aws_iam_role.file_upload_exec_role.name}"
+  policy_arn = "${aws_iam_policy.lambda_logging.arn}"
+}
+resource "aws_iam_role_policy_attachment" "audio_lambda_logs" {
+  role = "${aws_iam_role.audio_exec_role.name}"
   policy_arn = "${aws_iam_policy.lambda_logging.arn}"
 }

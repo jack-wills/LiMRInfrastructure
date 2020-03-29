@@ -25,7 +25,7 @@ public class UploadImageLambda implements RequestHandler<RequestClass, ResponseC
         GeneratePresignedUrlRequest s3RequestUpload =
             new GeneratePresignedUrlRequest(
                     "limr-image-us-east-1",
-                    input.getImageX() + "_" + input.getImageY() + "_" + input.getTimestamp() + ".jpeg")
+                    input.getImageX() + "_" + input.getImageY() + "_" + input.getImageZ() + "_" + input.getRotation() + "_" + input.getTimestamp() + ".jpeg")
                     .withExpiration(Date.from(Instant.now().plusSeconds(3600)))
                     .withMethod(HttpMethod.PUT);
         String uploadUrl = s3Client.generatePresignedUrl(s3RequestUpload).toString();
@@ -33,7 +33,7 @@ public class UploadImageLambda implements RequestHandler<RequestClass, ResponseC
         GeneratePresignedUrlRequest s3RequestDownload =
             new GeneratePresignedUrlRequest(
                     "limr-image-us-east-1",
-                    input.getImageX() + "_" + input.getImageY() + "_" + input.getTimestamp() + ".jpeg")
+                    input.getImageX() + "_" + input.getImageY() + "_" + input.getImageZ() + "_" + input.getRotation() + "_" + input.getTimestamp() + ".jpeg")
                     .withExpiration(Date.from(Instant.now().plusSeconds(604800))) //7 days
                     .withMethod(HttpMethod.GET);
         String downloadUrl = s3Client.generatePresignedUrl(s3RequestDownload).toString();
@@ -43,6 +43,8 @@ public class UploadImageLambda implements RequestHandler<RequestClass, ResponseC
         putItems.put("ImageURL", new AttributeValue(downloadUrl));
         putItems.put("ImageX", new AttributeValue(input.getImageX()));
         putItems.put("ImageY", new AttributeValue(input.getImageY()));
+        putItems.put("ImageZ", new AttributeValue(input.getImageZ()));
+        putItems.put("Rotation", new AttributeValue(input.getRotation()));
 
         client.putItem(tableName, putItems);
         ResponseClass response = new ResponseClass();

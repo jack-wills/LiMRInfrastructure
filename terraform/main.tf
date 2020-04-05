@@ -1,14 +1,14 @@
 provider "aws" {
-  region  = "${var.aws_region}"
+  region  = var.aws_region
   profile = "limr"
 }
 
 variable "account_id" {
-  type = "string"
+  type = string
   default = "592986159531"
 }
 variable "sensor_data_name_prefix" {
-  type = "string"
+  type = string
   default = "SensorData"
 }
 
@@ -26,14 +26,14 @@ resource "aws_s3_bucket" "image_bucket" {
 }
 
 resource "aws_sqs_queue" "image_queue" {
-  name                        = "ImageQueue"
+  name = "ImageQueue"
 }
 
 resource "aws_dynamodb_table" "images" {
   name = "ImageDatabase0"
   billing_mode   = "PROVISIONED"
-  read_capacity  = 20
-  write_capacity = 20
+  read_capacity  = 5
+  write_capacity = 5
   hash_key       = "Timestamp"
 
   attribute {
@@ -44,8 +44,8 @@ resource "aws_dynamodb_table" "images" {
 resource "aws_dynamodb_table" "sensorData" {
   name = "${var.sensor_data_name_prefix}0"
   billing_mode   = "PROVISIONED"
-  read_capacity  = 20
-  write_capacity = 20
+  read_capacity  = 5
+  write_capacity = 5
   hash_key       = "SensorID"
 
   attribute {
@@ -57,8 +57,8 @@ resource "aws_dynamodb_table" "sensorData" {
 resource "aws_dynamodb_table" "audio" {
   name = "AudioDatabase0"
   billing_mode   = "PROVISIONED"
-  read_capacity  = 20
-  write_capacity = 20
+  read_capacity  = 5
+  write_capacity = 5
   hash_key       = "LinkID"
 
   attribute {

@@ -45,23 +45,23 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "put_sensor_data_lambda_logs" {
-  role = "${aws_iam_role.put_sensor_data_exec_role.name}"
-  policy_arn = "${aws_iam_policy.lambda_logging.arn}"
+  role = aws_iam_role.put_sensor_data_exec_role.name
+  policy_arn = aws_iam_policy.lambda_logging.arn
 }
 
 resource "aws_iam_role_policy_attachment" "get_sensor_data_lambda_logs" {
-  role = "${aws_iam_role.get_sensor_data_exec_role.name}"
-  policy_arn = "${aws_iam_policy.lambda_logging.arn}"
+  role = aws_iam_role.get_sensor_data_exec_role.name
+  policy_arn = aws_iam_policy.lambda_logging.arn
 }
 resource "aws_iam_role_policy_attachment" "upload_image_lambda_logs" {
-  role = "${aws_iam_role.upload_image_exec_role.name}"
-  policy_arn = "${aws_iam_policy.lambda_logging.arn}"
+  role = aws_iam_role.upload_image_exec_role.name
+  policy_arn = aws_iam_policy.lambda_logging.arn
 }
 resource "aws_iam_role_policy_attachment" "file_upload_lambda_logs" {
-  role = "${aws_iam_role.file_upload_exec_role.name}"
-  policy_arn = "${aws_iam_policy.lambda_logging.arn}"
+  role = aws_iam_role.file_upload_exec_role.name
+  policy_arn = aws_iam_policy.lambda_logging.arn
 }
 resource "aws_iam_role_policy_attachment" "audio_lambda_logs" {
-  role = "${aws_iam_role.audio_exec_role.name}"
-  policy_arn = "${aws_iam_policy.lambda_logging.arn}"
+  role = aws_iam_role.audio_exec_role.name
+  policy_arn = aws_iam_policy.lambda_logging.arn
 }

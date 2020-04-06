@@ -29,7 +29,7 @@ public class FileUploadLambda implements RequestHandler<S3Event, Object> {
         logger.log(input.toJson());
         for (S3EventNotificationRecord record : input.getRecords()) {
             String[] fileName = record.getS3().getObject().getKey().replace(".jpeg", "").split("_");
-            String timestamp = fileName[2].replace("%3A",":");
+            String timestamp = fileName[4].replace("%3A",":");
 
             AmazonDynamoDBClient client = new AmazonDynamoDBClient();
             GetItemRequest request = new GetItemRequest();
@@ -50,6 +50,8 @@ public class FileUploadLambda implements RequestHandler<S3Event, Object> {
             }
             itemJson.put("x", item.get("ImageX").getS());
             itemJson.put("y", item.get("ImageY").getS());
+            itemJson.put("z", item.get("ImageZ").getS());
+            itemJson.put("angle", item.get("Rotation").getS());
             itemJson.put("url", item.get("ImageURL").getS());
             itemJson.put("timestamp", timestamp);
 

@@ -14,6 +14,7 @@ resource "aws_api_gateway_deployment" "deployment" {
   depends_on  = [aws_api_gateway_integration.put_sensor_data, aws_api_gateway_integration.get_sensor_data, aws_api_gateway_integration.upload_image, aws_api_gateway_integration.audio] //add other integration
   rest_api_id = aws_api_gateway_rest_api.api.id
   stage_name  = "prod"
+  stage_description = "Production Deployment"
 }
 
 resource "aws_api_gateway_resource" "resource" {

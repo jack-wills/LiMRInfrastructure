@@ -27,6 +27,7 @@ resource "aws_s3_bucket" "image_bucket" {
 
 resource "aws_sqs_queue" "image_queue" {
   name = "ImageQueue"
+  receive_wait_time_seconds = 5
 }
 
 resource "aws_dynamodb_table" "images" {

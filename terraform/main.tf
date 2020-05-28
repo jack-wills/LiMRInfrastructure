@@ -45,8 +45,8 @@ resource "aws_dynamodb_table" "images" {
 resource "aws_dynamodb_table" "sensorData" {
   name = "${var.sensor_data_name_prefix}0"
   billing_mode   = "PROVISIONED"
-  read_capacity  = 5
-  write_capacity = 5
+  read_capacity  = 15
+  write_capacity = 15
   hash_key       = "SensorID"
 
   attribute {
